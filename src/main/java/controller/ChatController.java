@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+
 @Controller
 public class ChatController {
 
@@ -17,10 +19,21 @@ public class ChatController {
 //        return "greeting";
 //    }
 
-    @RequestMapping(value = "/messages", method = RequestMethod.POST)
-    public String getMessage(ChatMessageModel chatMessageModel) {
-        ChatMessageModel chatMessage = new ChatMessageModel(chatMessageModel.getText());
-        return chatMessage.toString();
+    private ArrayList<String> list = new ArrayList<>();
+
+    @GetMapping("/sendMessage")
+    public String sendMessage(@RequestParam(name = "text", required = false, defaultValue = "Default_Message") String name, Model model) {
+        list.add(name);
+        model.addAttribute("text", name);
+        return "sendMessage";
+    }
+
+    @RequestMapping(value = "/getMessage", method = RequestMethod.POST)
+    public String getMessage() {
+        for (String s : list) {
+            System.out.println(s);
+        }
+        return "getMessage";
     }
 
 }
