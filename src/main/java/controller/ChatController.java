@@ -1,12 +1,10 @@
 package controller;
 
 import model.ChatMessageModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -21,14 +19,23 @@ public class ChatController {
 
     private ArrayList<String> list = new ArrayList<>();
 
-    @GetMapping("/sendMessage")
+//    @GetMapping("/sendMessage")
+//    @ResponseStatus(HttpStatus.OK)
+//    public String sendMessage(@RequestParam(name = "text", required = false, defaultValue = "Default_Message") String name, Model model) {
+//        list.add(name);
+//        model.addAttribute("text", name);
+//        return "sendMessage";
+//    }
+
+    @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
     public String sendMessage(@RequestParam(name = "text", required = false, defaultValue = "Default_Message") String name, Model model) {
         list.add(name);
         model.addAttribute("text", name);
         return "sendMessage";
     }
 
-    @RequestMapping(value = "/getMessage", method = RequestMethod.POST)
+    @GetMapping(value = "/getMessage")
     public String getMessage() {
         for (String s : list) {
             System.out.println(s);
