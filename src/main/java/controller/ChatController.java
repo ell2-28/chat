@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-@Controller
+@RestController
 public class ChatController {
 
 //    @GetMapping(value = "/greeting")
@@ -32,15 +32,15 @@ public class ChatController {
     public String sendMessage(@RequestParam(name = "text", required = false, defaultValue = "Default_Message") String name, Model model) {
         list.add(name);
         model.addAttribute("text", name);
-        return "sendMessage";
+        return "Message sent";
     }
 
     @GetMapping(value = "/getMessage")
-    public String getMessage() {
+    public ArrayList<String> getMessage() {
         for (String s : list) {
             System.out.println(s);
         }
-        return "getMessage";
+        return list;
     }
 
 }
