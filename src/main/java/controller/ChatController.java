@@ -1,6 +1,5 @@
 package controller;
 
-import model.ChatMessageModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
