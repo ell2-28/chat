@@ -1,10 +1,28 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en, ru">
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <title>Chat</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-<p>Get your greeting <a href="/sendMessage1">here</a></p>
+<p>Сообщения</p>
+<p id="contenInput"></p>
+<form>
+    <p><input name="a"> <input type="submit" class="mytext"></p>
+</form>
+<script>
+var xhr = new XMLHttpRequest();
+xhr.open("POST", '/sendMessage', true);
+
+xhr.setRequestHeader("Content-type", "application/json");
+
+var data = JSON.stringify({"value":document.getElementsByName("a")[0].value});
+xhr.send(data);
+
+
+
+
+</script>
 </body>
 </html>
