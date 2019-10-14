@@ -7,19 +7,35 @@
 </head>
 <body>
 <p>Сообщения</p>
-<p id="contenInput"></p>
-<form>
-    <p><input name="a"> <input type="submit" class="mytext"></p>
-</form>
+<p class="answer"></p>
+<div>
+    <p><input name="a"/>
+        <button type="button" class="button">Отправить</button>
+    </p>
+</div>
 <script>
-var xhr = new XMLHttpRequest();
-xhr.open("POST", '/sendMessage', true);
+$(function() {
 
-xhr.setRequestHeader("Content-type", "application/json");
+        $( '.button' ).click(function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", '/sendMessage', true);
 
-var data = JSON.stringify({"value":document.getElementsByName("a")[0].value});
-xhr.send(data);
+        xhr.setRequestHeader("Content-type", "application/json");
 
+        var data = JSON.stringify({"value":document.getElementsByName("a")[0].value});
+        xhr.send(data);
+
+
+        $.get('/getMessage', null, function(data) {
+        console.log(data);
+        $(".answer").append('<div>' + JSON.stringify(data));
+
+        })
+
+
+        });
+
+        });
 
 
 
