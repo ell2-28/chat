@@ -9,36 +9,32 @@
 <p>Сообщения</p>
 <p class="answer"></p>
 <div>
-    <p><input name="a"/>
+    <p>
+        <input id="myform" name="a"/>
         <button type="button" class="button">Отправить</button>
     </p>
 </div>
 <script>
-$(function() {
-
-        $( '.button' ).click(function() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", '/sendMessage', true);
-
-        xhr.setRequestHeader("Content-type", "application/json");
-
-        var data = JSON.stringify({"value":document.getElementsByName("a")[0].value});
-        xhr.send(data);
-
+    $(function() {
 
         $.get('/getMessage', null, function(data) {
-        console.log(data);
-        $(".answer").append('<div>' + JSON.stringify(data));
-
+            data.forEach((message => {
+                $(".answer").append('<div>' + JSON.stringify(message.value));
+            }));
         })
 
+        $('.button').click(function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/sendMessage', true);
+            xhr.setRequestHeader("Content-type", "application/json");
 
+            let value = document.getElementsByName("a")[0].value;
+            xhr.send(JSON.stringify({"value": value}));
+            $("#myform").val('');
+            $(".answer").append('<div>' + value + '<div>');
         });
 
-        });
-
-
-
+     });
 </script>
 </body>
 </html>
