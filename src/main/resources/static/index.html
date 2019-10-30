@@ -5,25 +5,8 @@
     <title>Chat</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
-<body>
-<p>Сообщения</p>
-<p class="answer"></p>
-<div>
-    <p>
-        <input id="myform" name="a"/>
-        <button type="button" class="button">Отправить</button>
-    </p>
-</div>
 <script>
-    $(function() {
-
-        $.get('/getMessage', null, function(data) {
-            data.forEach((message => {
-                $(".answer").append('<div>' + JSON.stringify(message.value));
-            }));
-        })
-
-        $('.button').click(function() {
+    function fun() {
             var xhr = new XMLHttpRequest();
             xhr.open("POST", '/sendMessage', true);
             xhr.setRequestHeader("Content-type", "application/json");
@@ -32,9 +15,28 @@
             xhr.send(JSON.stringify({"value": value}));
             $("#myform").val('');
             $(".answer").append('<div>' + value + '<div>');
-        });
+        }
+        
+    $(function() {
 
+        $.get('/getMessage', null, function(data) {
+            data.forEach((message => {
+                $(".answer").append('<div>' + JSON.stringify(message.value));
+            }));
+        })
+
+        $('.button').click(fun);
      });
 </script>
+<body>
+<p>Сообщения</p>
+<p class="answer"></p>
+<div>
+    <form onsubmit="fun(); return false;">
+        <input id="myform" name="a"/>
+        <button type="button" class="button">Отправить</button>
+    </form>
+</div>
+
 </body>
 </html>
